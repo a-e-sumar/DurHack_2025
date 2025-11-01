@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/a-e-sumar/DurHack_2025/issues"
   },
-  "homepage": "https://github.com/a-e-sumar/DurHack_2025#readme"
+  "homepage": "https://github.com/a-e-sumar/DurHack_2025#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
 }

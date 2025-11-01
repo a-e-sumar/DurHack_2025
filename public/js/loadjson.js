@@ -17,19 +17,22 @@ function JSONButton() {
     if (!data) {
         return;
     }
+    let attendeesOut;
+    let availability_windowOut;
+    let event_durationOut;
     try {
       const attendees = data.attendees;
-      const attendeesOut = Object.entries(attendees)        // → [ ['a',1], ['b',2], ['c',3] ]
+      attendeesOut = Object.entries(attendees)        // → [ ['a',1], ['b',2], ['c',3] ]
       .map(([key, value]) => `${key}: ${value}`)
       .join("\n");
 
       const availability_window = data.availability_window;
-      const availability_windowOut = Object.entries(availability_window)        // → [ ['a',1], ['b',2], ['c',3] ]
+      availability_windowOut = Object.entries(availability_window)        // → [ ['a',1], ['b',2], ['c',3] ]
       .map(([key, value]) => `${key}: ${value}`)
       .join("\n");
 
       const event_duration = data.event_duration;
-      const event_durationOut = Object.entries(event_duration)        // → [ ['a',1], ['b',2], ['c',3] ]
+      event_durationOut = Object.entries(event_duration)        // → [ ['a',1], ['b',2], ['c',3] ]
       .map(([key, value]) => `${key}: ${value}`)
       .join("\n");
     } catch (err) {
