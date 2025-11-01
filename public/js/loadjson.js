@@ -1,3 +1,5 @@
+const { json } = require("body-parser");
+
 function loadJSON() {
   const raw = document.getElementById("jsonInput").value;
 
@@ -20,6 +22,7 @@ function JSONButton() {
     let attendeesOut;
     let availability_windowOut;
     let event_durationOut;
+    let json_commentsOut;
     try {
       const attendees = data.attendees;
       attendeesOut = Object.entries(attendees)        // → [ ['a',1], ['b',2], ['c',3] ]
@@ -40,9 +43,14 @@ function JSONButton() {
       alert("Error processing JSON data. Please check the console for details.");
     }
 
+      const json_comments = data._comment;
+      if (json_comments) {
+        json_commentsOut = json_comments;
+      }
     const attendeesElement = document.getElementById("attendees");
     const availability_windowElement = document.getElementById("availability_window");
     const event_durationElement = document.getElementById("event_duration");
+    const json_commentsElement = document.getElementById("json_comments");
     if (data) {
         attendeesElement.textContent = attendeesOut;
         availability_windowElement.textContent = availability_windowOut;
@@ -51,5 +59,11 @@ function JSONButton() {
         attendeesElement.textContent = "No valid data loaded.";
         availability_windowElement.textContent = "";
         event_durationElement.textContent = "";
+    }
+
+    if (json_comments) {
+      json_commentsElement.textContent = json_commentsOut;
+    } else {
+      json_commentsElement.textContent = "No comments found";
     }
 }
