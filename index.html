@@ -14,15 +14,12 @@
     <p>Find the best place for colleagues to meet — balancing carbon emissions and fairness.</p>
   </header>
 
-  <section id="inputs">
-    <h2>Select Office Locations</h2>
-    <p>Enter office cities or select from the list below:</p>
-    <input type="text" id="officeInput" placeholder="e.g. London, New York, Tokyo">
-    <button onclick="addOffice()">Add Office</button>
-
-    <ul id="officeList"></ul>
-
-    <button id="calculateBtn" onclick="calculateBestLocation()">Calculate Best Location</button>
+  <section id="input-section">
+    <h2>Import Attendee Data (JSON)</h2>
+    <textarea id="jsonInput" placeholder="Paste JSON here..."></textarea>
+    <br>
+    <input type="file" id="fileInput">
+    <button onclick="loadJSON()">Load Scenario</button>
   </section>
 
   <section id="results" class="hidden">
