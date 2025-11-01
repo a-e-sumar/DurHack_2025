@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Fair Travel Meeting Planner</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="css/styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
@@ -24,10 +24,10 @@
 
 
   <section id="jsonParsed">
-    <h2>Parsed Attendee Data</h2>
-    <p id="attendees">Attendee Locations: </p>
-    <p id="availability_window">Available Times: </p>
-    <p id="event_duration">Event Duration: </p>
+    <h2>Attendee Data</h2>
+    <p><strong>Attendee Locations:</strong> <span id="attendees"></span></p>
+    <p><strong>Available Times:</strong> <span id="availability_window"></span></p>
+    <p><strong>Event Duration:</strong> <span id="event_duration"></span></p>
   </section>
 
   <section id="results" class="hidden">
@@ -36,21 +36,23 @@
     <p><strong>Total CO₂ Emissions:</strong> <span id="co2Result">Loading...</span> kg</p>
     <p><strong>Fairness Score (max travel difference):</strong> <span id="fairnessResult">Loading...</span> hrs</p>
 
-    <h3>Office Travel Summary</h3>
+    <h3>Travel Summary</h3>
     <table>
       <thead>
         <tr>
-          <th>Office</th>
-          <th>Travel Time (hrs)</th>
-          <th>CO₂ Emissions (kg)</th>
+          <th>Meet Up Location</th>
+          <th>Total Travel Time (hrs)</th>
+          <th>Total CO₂ Emissions (kg)</th>
         </tr>
       </thead>
       <tbody id="resultsTable"></tbody>
     </table>
   </section>
+
   <h3 style="text-align: center">Copyright 2025 GlamorousSubtleElephant.</h3>
-  <script src="script.js"></script>
-  <script src="loadjson.js"></script>
-  <script src="loadfile.js"></script>
+
+  <script src="js/script.js"></script>
+  <script src="js/loadjson.js"></script>
+  <script src="js/loadfile.js"></script>
 </body>
 </html>
