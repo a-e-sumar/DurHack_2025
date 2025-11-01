@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fair Travel Meeting Planner</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Fair & Sustainable Meeting Location Planner</h1>
+    <p>Find the best place for colleagues to meet — balancing carbon emissions and fairness.</p>
+  </header>
+
+  <section id="inputs">
+    <h2>Select Office Locations</h2>
+    <p>Enter office cities or select from the list below:</p>
+    <input type="text" id="officeInput" placeholder="e.g. London, New York, Tokyo">
+    <button onclick="addOffice()">Add Office</button>
+
+    <ul id="officeList"></ul>
+
+    <button id="calculateBtn" onclick="calculateBestLocation()">Calculate Best Location</button>
+  </section>
+
+  <section id="results" class="hidden">
+    <h2>Suggested Meeting Location</h2>
+    <p><strong>Location:</strong> <span id="bestLocation">Loading...</span></p>
+    <p><strong>Total CO₂ Emissions:</strong> <span id="co2Result">Loading...</span> kg</p>
+    <p><strong>Fairness Score (max travel difference):</strong> <span id="fairnessResult">Loading...</span> hrs</p>
+
+    <h3>Office Travel Summary</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Office</th>
+          <th>Travel Time (hrs)</th>
+          <th>CO₂ Emissions (kg)</th>
+        </tr>
+      </thead>
+      <tbody id="resultsTable"></tbody>
+    </table>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
