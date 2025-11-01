@@ -17,6 +17,8 @@ header {
 
 section {
   background: white;
+  align-content: center;
+  text-align: center;
   width: 80%;
   margin: 20px auto;
   padding: 20px;
