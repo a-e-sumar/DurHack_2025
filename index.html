@@ -18,8 +18,8 @@
     <h2>Import Attendee Data (JSON)</h2>
     <textarea id="jsonInput" placeholder="Paste JSON here..."></textarea>
     <br>
-    <input type="file" id="fileInput">
-    <button onclick="loadJSON()">Load Scenario</button>
+    <input type="file" id="fileInput" accept=".json">
+    <button onclick="loadJSON('jsonInput')">Load Scenario</button>
   </section>
 
   <section id="results" class="hidden">
@@ -43,5 +43,6 @@
 
   <script src="script.js"></script>
   <script src="loadjson.js"></script>
+  <script src="loadfile.js"></script>
 </body>
 </html>
