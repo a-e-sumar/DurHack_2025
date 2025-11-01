@@ -19,7 +19,15 @@
     <textarea id="jsonInput" placeholder="Paste JSON here..."></textarea>
     <br>
     <input type="file" id="fileInput" accept=".json">
-    <button onclick="loadJSON('jsonInput')">Load Scenario</button>
+    <button onclick="JSONButton('jsonInput')">Load Scenario</button>
+  </section>
+
+
+  <section id="jsonParsed">
+    <h2>Parsed Attendee Data</h2>
+    <p id="attendees">Attendee Locations: </p>
+    <p id="availability_window">Available Times: </p>
+    <p id="event_duration">Event Duration: </p>
   </section>
 
   <section id="results" class="hidden">
