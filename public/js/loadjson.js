@@ -53,10 +53,12 @@ async function JSONButton() {
       const availability_windowElement = document.getElementById("availability_window");
       const event_durationElement = document.getElementById("event_duration");
       const json_commentsElement = document.getElementById("json_comments");
+      const processing_statusElement = document.getElementById("processing_status");
       if (data) {
           attendeesElement.textContent = attendeesOut;
           availability_windowElement.textContent = availability_windowOut;
           event_durationElement.textContent = event_durationOut;
+          processing_statusElement.textContent = "Please wait...";
       } else {
           attendeesElement.textContent = "No valid data loaded.";
           availability_windowElement.textContent = "";
@@ -86,11 +88,70 @@ async function JSONButton() {
       distilledFlights = distillFlights(allFlights);
       console.log("Distilled flights:", distilledFlights);
 
+      let allowedDepAirports = [];
+
       if (attendees) {
 
-      }
+        const CITY_TO_AIRPORT = {
+          "Mumbai":    "BOM",
+          "Shanghai":  "PVG",
+          "Hong Kong": "HKG",
+          "Singapore": "SIN",
+          "Sydney":    "SYD",
+          "Paris":     "CDG",
+          "London":    "LHR",
+          "Dubai":     "DXB",
+          "Zurich":    "ZRH",
+          "Geneva":    "GVA",
+          "Aarhus":    "AAR",
+          "Wroclaw":   "WRO",
+          "Budapest":  "BUD"
+        };
 
+        for (const [cityName, headcount] of Object.entries(data.attendees)) {
+          allowedDepAirports.push(CITY_TO_AIRPORT[cityName]);
+        }
+        const allowedDepFlights = allowDepFlightsOnly(distilledFlights, allowedDepAirports);
+        console.log("Allowed departure flights:", allowedDepFlights);
+
+        const arrivalsCount = allowedDepFlights.reduce((acc, flight) => {
+          const arr = flight.ARRAPT; // destination airport code
+
+          if (!acc[arr]) {
+            acc[arr] = 0;
+          }
+
+          acc[arr] += 1;
+          return acc;
+        }, {});
+        console.log("Arrivals count:", arrivalsCount);
+
+        let co2Array = [];
+        let totalCo2 = 0;
+
+        for (const [airport, count] of Object.entries(arrivalsCount)) {
+          if (count === allowedDepAirports.length) {
+            console.log(`All attendees can arrive at ${airport}`);
+            totalCo2 = 0;
+            for (const [cityName, headcount] of Object.entries(data.attendees)) {
+              let match = allowedDepFlights.filter(flight => flight.ARRAPT === airport && flight.DEPAPT === CITY_TO_AIRPORT[cityName]);
+              totalCo2 += (headcount * match[0].ESTIMATED_CO2_TOTAL_TONNES);
+            }
+            co2Array.push({ airport, totalCo2 });
+          }
+        }
+        const co2Sorted = co2Array.slice().sort((a, b) => a.totalCo2 - b.totalCo2);
+        const lowCarbonAnswer = co2Sorted[0];
+
+      const results_element = document.getElementById("results");
+      const bestLocation_element = document.getElementById("bestLocation");
+      const co2_element = document.getElementById("co2Result");
+      processing_statusElement.textContent = "Done!";
+      results_element.classList.remove("hidden");
+      bestLocation_element.textContent = lowCarbonAnswer.airport;
+      co2_element.textContent = lowCarbonAnswer.totalCo2.toFixed(2) + " tonnes CO2";
     }
+  }
 }
 
 function buildDateListFromWindow(startISO, endISO) {
@@ -214,3 +275,9 @@ function distillFlights(flightsArr) {
   return Array.from(bestByRoute.values());
 }
 
+function allowDepFlightsOnly(flightsArr, allowedDepAirports) {
+  const allowedDepFlights = flightsArr.filter(flight =>
+  allowedDepAirports.includes(flight.DEPAPT)
+  );
+  return allowedDepFlights;
+}

@@ -23,7 +23,7 @@
     <br>
     <input type="file" id="fileInput" accept=".json">
     <button onclick="JSONButton('jsonInput')">Load Scenario</button>
-    <button onclick="filterFlights('LHR', 'BOM', 2024, 1, 20)">Load Scenario</button>
+    <button onclick="filterFlights('AllAirlines', 'AllAirlines', 2024, 1, 20)">Load Scenario</button>
   </section>
 
 
@@ -33,6 +33,7 @@
     <p><strong>Available Times:</strong> <span id="availability_window">...</span></p>
     <p><strong>Event Duration:</strong> <span id="event_duration">...</span></p>
     <p><strong>Comments:</strong> <span id="json_comments">...</span></p>
+    <p><span id="processing_status">Ready</span></p>
   </section>
 
   <section id="results" class="hidden">
