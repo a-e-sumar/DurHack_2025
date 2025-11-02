@@ -23,7 +23,6 @@
     <br>
     <input type="file" id="fileInput" accept=".json">
     <button onclick="JSONButton('jsonInput')">Load Scenario</button>
-    <button onclick="filterFlights('AllAirlines', 'AllAirlines', 2024, 1, 20)">Load Scenario</button>
   </section>
 
 
@@ -36,24 +35,37 @@
     <p><span id="processing_status">Ready</span></p>
   </section>
 
-  <section id="results" class="hidden">
-    <h2>Suggested Meeting Location</h2>
-    <p><strong>Location:</strong> <span id="bestLocation">Loading...</span></p>
-    <p><strong>Total CO₂ Emissions:</strong> <span id="co2Result">Loading...</span> kg</p>
-    <p><strong>Fairness Score (max travel difference):</strong> <span id="fairnessResult">Loading...</span> hrs</p>
 
-    <h3>Travel Summary</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Meet Up Location</th>
-          <th>Total Travel Time (hrs)</th>
-          <th>Total CO₂ Emissions (kg)</th>
-        </tr>
-      </thead>
-      <tbody id="resultsTable"></tbody>
-    </table>
-  </section>
+  <div id="results" class="three-col">
+    <section id="results_lowcarbon" class="hidden">
+      <h2>Low Carbon Meeting Location</h2>
+      <p><strong>Location:</strong> <span id="bestLocationLC">Loading...</span></p>
+      <p><strong>Total CO₂ Emissions:</strong> <span id="co2ResultLC">Loading...</span></p>
+      <p><strong>Fairness Score (max travel difference):</strong> <span id="fairnessResultLC">Loading...</span></p>
+      <textarea id="jsonLC" placeholder=""></textarea>
+      <br>
+    </section>
+
+    <section id="results_balanced" class="hidden">
+      <h2>Recommended Meeting Location</h2>
+      <p><strong>Location:</strong> <span id="bestLocationBA">Loading...</span></p>
+      <p><strong>Total CO₂ Emissions:</strong> <span id="co2ResultBA">Loading...</span></p>
+      <p><strong>Fairness Score (max travel difference):</strong> <span id="fairnessResultBA">Loading...</span></p>
+      <textarea id="jsonBA" placeholder=""></textarea>
+      <br>
+    </section>
+
+    <section id="results_fairness" class="hidden">
+      <h2>High Fairness Meeting Location</h2>
+      <p><strong>Location:</strong> <span id="bestLocationFN">Loading...</span></p>
+      <p><strong>Total CO₂ Emissions:</strong> <span id="co2ResultFN">Loading...</span></p>
+      <p><strong>Fairness Score (max travel difference):</strong> <span id="fairnessResultFN">Loading...</span></p>
+      <textarea id="jsonFN" placeholder=""></textarea>
+      <br>
+    </section>
+  </div>
+
+  
 
   <h3 style="text-align: center">&copy; 2025 GlamorousSubtleElephant</h3>
 

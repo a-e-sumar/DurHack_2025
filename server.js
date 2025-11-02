@@ -1,9 +1,11 @@
+require("dotenv").config();
+
 const express = require("express");
 const { runAirlineEmissions } = require("./pythonairlineemissions.js");
 const path = require("path");
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // 1. Serve static files from /public
 //    This makes /public/script.js available at http://localhost:3000/script.js
@@ -29,13 +31,14 @@ app.get("/emissions", async (req, res) => {
       Number(req.query.year ?? 2024),
       Number(req.query.month ?? 1),
       Number(req.query.day ?? 20),
-      "./test_data/",
-      "./public/venv/emissions.csv"
+      process.env.DATA_PATH,
+      process.env.CO2_PATH
     );
 
     res.json(data);
   } catch (err) {
-    res.status(500).json({ error: err.toString() });
+    console.error("!!! /emissions error:", err);
+    res.json([]); // <-- send [] instead of 500
   }
 });
 

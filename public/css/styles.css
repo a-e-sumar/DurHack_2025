@@ -72,3 +72,25 @@ button {
 button:hover {
   background-color: #003780;
 }
+
+.three-col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  background: white;
+  align-content: center;
+  text-align: center;
+  width: 80%;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);     
+}
+
+.panel {
+  flex: 1;            
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background: #fff;
+}

@@ -20,6 +20,7 @@
   "homepage": "https://github.com/a-e-sumar/DurHack_2025#readme",
   "dependencies": {
     "csv-parser": "^3.2.0",
+    "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "nodejs-polars": "^0.22.1",
     "polars": "^0.0.1"
