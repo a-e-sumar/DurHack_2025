@@ -1,4 +1,5 @@
 const express = require("express");
+const { runAirlineEmissions } = require("./pythonairlineemissions.js");
 const path = require("path");
 
 const app = express();
@@ -19,6 +20,23 @@ app.get("/", (req, res) => {
       res.status(500).send("index.html not found or could not be sent.");
     }
   });
+});
+app.get("/emissions", async (req, res) => {
+  try {
+    const data = await runAirlineEmissions(
+      req.query.depapt ?? "LHR",
+      req.query.arrapt ?? "BOM",
+      Number(req.query.year ?? 2024),
+      Number(req.query.month ?? 1),
+      Number(req.query.day ?? 20),
+      "./test_data/",
+      "./public/venv/emissions.csv"
+    );
+
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: err.toString() });
+  }
 });
 
 // 3. Start the server
