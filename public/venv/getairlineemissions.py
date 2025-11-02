@@ -7,8 +7,8 @@ def getAirlineEmissions(depapt, arrapt, year, month, day, schedules, emissions):
     emissions_file = str(emissions)
 
     # read CSVs as *lazy* frames (scan_csv = lazy, good for big data)
-    schedules_lazy = pl.scan_csv(schedule_file, infer_schema_length=100000)
-    emissions_lazy = pl.scan_csv(emissions_file, infer_schema_length=100000)
+    schedules_lazy = pl.scan_csv(schedule_file, infer_schema_length=20000)
+    emissions_lazy = pl.scan_csv(emissions_file, infer_schema_length=20000)
     
     # turn them into real DataFrames so we can treat them like normal tables
     schedules = schedules_lazy.collect()
