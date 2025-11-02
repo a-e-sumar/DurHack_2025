@@ -25,20 +25,28 @@ app.get("/", (req, res) => {
 });
 app.get("/emissions", async (req, res) => {
   try {
+    const depapt = req.query.depapt ?? "LHR";
+    const arrapt = req.query.arrapt ?? "BOM";
+    const year   = Number(req.query.year ?? 2024);
+    const month  = Number(req.query.month ?? 1);
+    const day    = Number(req.query.day ?? 20);
+
     const data = await runAirlineEmissions(
-      req.query.depapt ?? "LHR",
-      req.query.arrapt ?? "BOM",
-      Number(req.query.year ?? 2024),
-      Number(req.query.month ?? 1),
-      Number(req.query.day ?? 20),
+      depapt,
+      arrapt,
+      year,
+      month,
+      day,
       process.env.DATA_PATH,
-      process.env.CO2_PATH
+      process.env.CO2_PATH,
+      process.env.PYTHON_PATH,
+      process.env.SCRIPT_PATH
     );
 
-    res.json(data);
+    res.json(data || []);
   } catch (err) {
-    console.error("!!! /emissions error:", err);
-    res.json([]); // <-- send [] instead of 500
+    console.error("emissions route error:", err);
+    res.json([]);
   }
 });
 

@@ -1,31 +1,31 @@
 const { spawn } = require("child_process");
+const fs = require("fs");
+const os = require("os");
 const path = require("path");
 
-function getVenvPythonPath() {
-  if (process.platform === "win32") {
-    return path.join(__dirname, "public", "venv", "Scripts", "python.exe");
-  } else {
-    return path.join(__dirname, "public", "venv", "venv", "bin", "python");
-  }
-}
-
-function runAirlineEmissions(
+async function runAirlineEmissions(
   depapt,
   arrapt,
   year,
   month,
   day,
   schedulesDir,
-  emissionsFile
+  emissionsFile,
+  pythonPath,
+  scriptPath
 ) {
   return new Promise((resolve, reject) => {
-    const pythonPath = getVenvPythonPath();
-    const scriptPath = path.join(__dirname, "public", "venv", "getairlineemissions.py");
+    // make a temp file to hold python's stdout
+    const tmpFile = path.join(
+      os.tmpdir(),
+      `emissions_${Date.now()}_${Math.random().toString(16).slice(2)}.json`
+    );
 
-    const pythonInline = `
+    // python code we'll run
+    const pyCode = `
 import json, runpy
 m = runpy.run_path(r"${scriptPath}")
-m["getAirlineEmissions"](
+result = m["getAirlineEmissions"](
     r"${depapt}",
     r"${arrapt}",
     ${year},
@@ -34,42 +34,45 @@ m["getAirlineEmissions"](
     r"${schedulesDir}",
     r"${emissionsFile}"
 )
-`.trim();
+print(json.dumps(result))
+`;
 
-    const child = spawn(pythonPath, ["-c", pythonInline], {
-      cwd: __dirname,
+    // spawn python
+    const proc = spawn(pythonPath, ["-c", pyCode]);
+
+    // write python stdout straight to file (no giant string in Node)
+    const outStream = fs.createWriteStream(tmpFile);
+    proc.stdout.pipe(outStream);
+
+    // capture stderr just in case python errors
+    let stderrStr = "";
+    proc.stderr.on("data", chunk => {
+      stderrStr += chunk.toString();
     });
 
-    let stdout = "";
-    let stderr = "";
+    proc.on("error", reject);
 
-    child.stdout.on("data", chunk => {
-      stdout += chunk.toString();
-    });
+    proc.on("close", code => {
+      // make sure file is finished writing before we read it
+      outStream.end(() => {
+        if (code !== 0) {
+          return reject(new Error("Python failed: " + stderrStr));
+        }
 
-    child.stderr.on("data", chunk => {
-      stderr += chunk.toString();
-    });
+        fs.readFile(tmpFile, "utf8", (err, fileData) => {
+          // clean up temp file no matter what
+          fs.unlink(tmpFile, () => {});
 
-    child.on("close", code => {
-      if (code !== 0) {
-        reject(new Error(`Python exited with code ${code}\n${stderr}`));
-        return;
-      }
+          if (err) return reject(err);
 
-      try {
-        const parsed = JSON.parse(stdout);
-        resolve(parsed);
-      } catch (e) {
-        reject(
-          new Error(
-            "Could not parse Python output as JSON.\nOutput was:\n" +
-              stdout +
-              "\nError:\n" +
-              e.message
-          )
-        );
-      }
+          try {
+            const parsed = JSON.parse(fileData);
+            resolve(parsed);
+          } catch (e) {
+            reject(e);
+          }
+        });
+      });
     });
   });
 }

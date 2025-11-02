@@ -48,8 +48,7 @@ def getAirlineEmissions(depapt, arrapt, year, month, day, schedules, emissions):
 
     # again: convert to plain Python so you don't get the Polars table box
     result_list = joined.to_dicts()
-    json_dump = json.dumps(result_list, indent=4)
-    print(json_dump)
+    return result_list
 
 if __name__ == "__main__":
     # Expecting:
