@@ -48,3 +48,39 @@ build/
 # ========================
 # End of File
 # ========================
+.DS_Store
+public/venv/2024_01_20.csv
+public/venv/emissions.csv
+test_data/.DS_Store
+test_data/2024/.DS_Store
+test_data/2024/01/01.csv
+test_data/2024/01/02.csv
+test_data/2024/01/03.csv
+test_data/2024/01/04.csv
+test_data/2024/01/05.csv
+test_data/2024/01/06.csv
+test_data/2024/01/07.csv
+test_data/2024/01/08.csv
+test_data/2024/01/09.csv
+test_data/2024/01/10.csv
+test_data/2024/01/11.csv
+test_data/2024/01/12.csv
+test_data/2024/01/13.csv
+test_data/2024/01/14.csv
+test_data/2024/01/15.csv
+test_data/2024/01/16.csv
+test_data/2024/01/17.csv
+test_data/2024/01/18.csv
+test_data/2024/01/19.csv
+test_data/2024/01/20.csv
+test_data/2024/01/21.csv
+test_data/2024/01/22.csv
+test_data/2024/01/23.csv
+test_data/2024/01/24.csv
+test_data/2024/01/25.csv
+test_data/2024/01/26.csv
+test_data/2024/01/27.csv
+test_data/2024/01/28.csv
+test_data/2024/01/29.csv
+test_data/2024/01/30.csv
+test_data/2024/01/31.csv
